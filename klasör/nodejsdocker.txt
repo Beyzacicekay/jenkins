@@ -1,0 +1,32 @@
+# Temel imaj
+FROM node:18
+
+# Çalışma dizini
+WORKDIR /app
+
+# Bağımlılıkları kopyala ve yükle
+COPY package*.json ./
+RUN npm install
+
+# Tüm dosyaları kopyala
+COPY . .
+
+# Uygulamayı başlat
+EXPOSE 3000
+CMD ["node", "app.js"]
+
+
+
+
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development

@@ -1,0 +1,11 @@
+# 1. Küçücük ama işlevli bir imaj
+FROM nginx:alpine
+
+# 2. Statik dosyaları Nginx'in servis klasörüne kopyala
+COPY . /usr/share/nginx/html
+
+# 3. Port aç (varsayılan 80)
+EXPOSE 80
+
+# 4. Nginx'i başlat
+CMD ["nginx", "-g", "daemon off;"]

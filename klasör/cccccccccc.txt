@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: emre
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: benimdb
+    ports:
+      - "5433:5432"  # ⚠️ ÇAKIŞMA YOK: dışarıdan 5433, içeride yine 5432
+
+  glassfish:
+    build: ./glassfish
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  python-app:
+    build: ./python-app
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: benimdb
+      DB_USER: emre
+      DB_PASS: 1234
+    depends_on:
+      - db
